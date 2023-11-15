@@ -5,7 +5,7 @@ import logger from "../logger.js";
 //CREATE
 
 export const createPost = async (req, res) => {
-    console.log()
+   
     logger.debug("0 Request processed successfully");
   try {
     const { userId, description, picturePath } = req.body; // the frontend is going to send this data
@@ -47,6 +47,9 @@ export const createPost = async (req, res) => {
 export const getFeedPosts = async (req, res) => {
    
   try {
+
+    console.log("Success: Hello Server!");
+    
     const post = await Post.find();
 
     
@@ -82,7 +85,7 @@ export const getUserPosts = async (req, res) => {
 //UPDATE
 
 export const likePost = async (req, res) => {
-    logger.debug("8 Request processed successfully");
+    //logger.debug("8 Request processed successfully");
   try {
     const { id } = req.params;
   
@@ -112,7 +115,7 @@ export const likePost = async (req, res) => {
 
   } catch (error) {
 
-    logger.debug(`17 An error occurred: ${error.message}`);
+    //logger.debug(`17 An error occurred: ${error.message}`);
     console.error(error);
     res.status(404).json({ message: error.message });
   }
