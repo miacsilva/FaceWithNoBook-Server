@@ -35,6 +35,7 @@ app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // setting the directory on where I keep my images (I store them locally)
 
 
+
 //FILE STORAGE
 //When someone saves a file it stores them into the "/public/assets" destination
 //Following code is from Multer Repo
@@ -61,19 +62,23 @@ app.use("/auth", authRoutes); // setting auth routes
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
-
-
 //MONGOOSE SETUP
 const PORT = process.env.PORT || 3001;
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
-    /* User.insertMany(users); //inserting manually data
-    Post.insertMany(posts); //inserting manually data */
+mongoose.set('strictQuery', false);
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
+
+//Connect to the database before listening
+connectDB().then(() => {
+  app.listen(PORT, () => {
+      console.log(`Listening on port: ${PORT}`);
   })
-  .catch((error) => console.log(`${error} did not connect`));
+})
