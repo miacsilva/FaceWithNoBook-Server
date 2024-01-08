@@ -74,7 +74,11 @@ const connectDB = async () => {
     console.log(error);
     process.exit(1);
   }
-}
+};
+
+// Enable CORS for all routes
+app.use(cors()); 
+
 
 //Connect to the database before listening
 connectDB().then(() => {
