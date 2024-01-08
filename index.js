@@ -37,6 +37,7 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // se
 
 
 
+
 //FILE STORAGE
 //When someone saves a file it stores them into the "/public/assets" destination
 //Following code is from Multer Repo
@@ -51,6 +52,9 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage }); // I will use this variable when uploading a file
+
+// Enable CORS specifically for the /auth/register route
+app.post("/auth/register", cors({ origin: 'https://facewithnobook.netlify.app' }), upload.single("picture"), register);
 
 //Routes w/ files = registation and creating posts
 
