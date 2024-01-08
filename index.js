@@ -20,6 +20,7 @@ import { users, posts } from "./data/index.js";
 import logger from "./logger.js";
 
 
+
 const __filename = fileURLToPath(import.meta.url); //expression for me to grab the file URL
 const __dirname = path.dirname(__filename); //this line and line 12 is only needed because I'm using type "modules"
 
@@ -56,6 +57,8 @@ const upload = multer({ storage }); // I will use this variable when uploading a
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost); // the "upload.single("picture")" is grabbing the pictures with it is uploaded from the frontend and uploading it
 
+
+
 //Routes
 
 app.use("/auth", authRoutes); // setting auth routes
@@ -76,8 +79,6 @@ const connectDB = async () => {
   }
 };
 
-// Enable CORS for all routes
-app.use(cors()); 
 
 
 //Connect to the database before listening
